@@ -40,15 +40,11 @@ to the endpoint and returns status 200 if successful
 """
 
 
-# curl -X POST -F "text=@test.txt" http://127.0.0.1:8000/our_endpoints/upload_file/
+# curl -X POST -F "text=@test.txt" http://127.0.0.1:8000/our_endpoints/upload_file/ (not working)
 @csrf_exempt
 @require_http_methods(["POST"], )
 def upload_file(request):
-    print('This is the request: ', request)
-    print('This is the request body: ', request.body)
     file = request.FILES['text']
-    print('This is the name of the file: ', file)
-    print('End of file descriptions')
     with open(file.name, 'wb') as dst:
         for chunk in file.chunks():
             dst.write(chunk)
@@ -66,7 +62,7 @@ server status and up time
 """
 
 
-# curl -I --head http://127.0.0.1:8000/our_endpoints/status2/
+# curl -I --head http://127.0.0.1:8000/our_endpoints/check_connection/ (working)
 @require_http_methods(["HEAD"])
 def check_connection(request):
     response = HttpResponse(status=200)
@@ -87,8 +83,8 @@ to the end point and returns a status of 200
 """
 
 
-# curl -X PUT -H "Content-Type: application/json" -d '{"test01": "11011101"}'
-# http://127.0.0.1:8000/our_endpoints/save_json_to_file/
+# curl -X PUT -H "Content-Type: application/json" -d '{\"test01\": \"11011101\"}'
+# http://127.0.0.1:8000/our_endpoints/save_json_to_file/ (working)
 @csrf_exempt
 @require_http_methods(["PUT"])
 def save_json_to_file(request):
@@ -112,7 +108,7 @@ from the request and returns a status of 200 when the file has been removed
 """
 
 
-# curl -X DELETE -d ""My_Files/test02"" http://127.0.0.1:8000/our_endpoints/delete_file/
+# curl -X DELETE -d "@My_Files/test02" http://127.0.0.1:8000/our_endpoints/delete_file/
 @csrf_exempt
 @require_http_methods(["DELETE"])
 def delete_file(request):

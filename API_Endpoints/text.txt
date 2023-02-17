@@ -1,3 +1,0 @@
-This is a file that has been uploaded to the server from Upload_file.py
-
-02/01/2023
